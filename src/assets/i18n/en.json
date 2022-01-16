@@ -1,0 +1,14 @@
+{
+  "SEARCHER": {
+    "TITLE": "Flight Inspiration Search",
+    "ORIGIN": "From",
+    "DEPARTURE_DATE": "Departure Date",
+    "ONE_WAY": "One way flight",
+    "DEPART": "Depart",
+    "RETURN": "Return",
+    "SEARCH_BUTTON": "Search flights",
+    "NON_STOP": "Direct flights only",
+    "MAX_PRICE": "Price limit",
+    "VIEW_BY": "Group flights by"
+  }
+}

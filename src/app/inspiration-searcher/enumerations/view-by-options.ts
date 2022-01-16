@@ -1,4 +1,4 @@
-enum ViewByOptions {
+export enum ViewByOptions {
   Country = 'COUNTRY',
   Date = 'DATE',
   Destination = 'Destination',
