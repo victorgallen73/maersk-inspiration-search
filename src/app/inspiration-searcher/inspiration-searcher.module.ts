@@ -5,9 +5,12 @@ import { InspirationSearcherRoutingModule } from './inspiration-searcher-routing
 import { SearcherComponent } from './components/searcher/searcher.component';
 import { InspirationSearcherViewComponent } from './views/inspiration-searcher-view/inspiration-searcher-view.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
+  exports: [
+    InspirationSearcherViewComponent,
+  ],
   declarations: [
     SearcherComponent,
     InspirationSearcherViewComponent
@@ -16,10 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    InspirationSearcherRoutingModule
+    InspirationSearcherRoutingModule,
+    SharedModule,
   ],
-  exports: [
-    InspirationSearcherViewComponent
-  ]
 })
 export class InspirationSearcherModule { }

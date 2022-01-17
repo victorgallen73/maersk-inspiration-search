@@ -1,3 +1,19 @@
-<form [formGroup]="formGroup" (ngSubmit)="searchInspirationSearch()" fxLayout="column" fxLayoutGap="2em" autocomplete="off" (keydown)="searchInspirationSearch($event)">
-
-</form>
+<div [formGroup]="formGroup" (ngSubmit)="searchInspirationSearch()" fxLayout="column" fxLayoutGap="2em" autocomplete="off" (keydown)="searchInspirationSearch($event)">
+  <mat-form-field appearance="fill" fxFlex>
+    <mat-label>{{ 'SEARCHER.ORIGIN' | translate}}</mat-label>
+    <mat-select formControlName="origin" attr.aria-label="{{ 'SEARCHER.ORIGIN' | translate}}" [placeholder]="'SEARCHER.ORIGIN' | translate">
+      <mat-option *ngFor="let iata of iataCodes" [value]="iata">
+        {{iata}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" fxFlex>
+    <mat-label>{{'SEARCHER.DEPARTURE_DATE' | translate}}</mat-label>
+    <mat-date-range-input formGroupName="departureDate" [rangePicker]="departureDatPicker" [dateFilter]="rangeFilter">
+      <input matStartDate formControlName="departureStart" [placeholder]="'DEPARTURE_DATE.START' | translate">
+      <input matEndDate formControlName="departureEnd" [placeholder]="'DEPARTURE_DATE.END' | translate">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="departureDatPicker"></mat-datepicker-toggle>
+    <mat-date-range-picker #departureDatPicker></mat-date-range-picker>
+  </mat-form-field>
+</div>

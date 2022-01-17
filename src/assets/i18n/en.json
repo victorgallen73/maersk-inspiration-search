@@ -10,5 +10,9 @@
     "NON_STOP": "Direct flights only",
     "MAX_PRICE": "Price limit",
     "VIEW_BY": "Group flights by"
+  },
+  "DEPARTURE_DATE": {
+    "START": "Start departure date",
+    "END": "End departure date"
   }
 }
