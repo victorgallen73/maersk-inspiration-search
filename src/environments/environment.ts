@@ -10,7 +10,9 @@ export const environment = {
   isDebugMode: true,
   apiURL: 'https://test.api.amadeus.com/v1',
   AMADEUS_CLIENT_ID: 'Cu21DJB12RIzr6wCDDUMM6KtpCNNkMyS',
-  AMADEUS_CLIENT_SECRET: '3XldjzHAmRp0pt3n'
+  AMADEUS_CLIENT_SECRET: '3XldjzHAmRp0pt3n',
+  tokenKey: 'amadeus-token',
+  refreshToken: 'refresh-token',
 };
 
 /*
