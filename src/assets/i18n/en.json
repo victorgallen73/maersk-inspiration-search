@@ -1,18 +1,23 @@
 {
+  "DEPARTURE_DATE": {
+    "END": "End departure date",
+    "START": "Start departure date"
+  },
+  "FOOTER": {
+    "DEVELOPED_BY": "Developed by Victor Gallen"
+  },
   "SEARCHER": {
-    "TITLE": "Flight Inspiration Search",
-    "ORIGIN": "From",
-    "DEPARTURE_DATE": "Departure Date",
-    "ONE_WAY": "One way flight",
     "DEPART": "Depart",
+    "DEPARTURE_DATE": "Departure Date",
+    "MAX_PRICE": "Price limit",
+    "MAX_DURATION": "Max. journey duration (days)",
+    "MIN_DURATION": "Min. journey duration (days)",
+    "NON_STOP": "Direct flights only",
     "RETURN": "Return",
     "SEARCH_BUTTON": "Search flights",
-    "NON_STOP": "Direct flights only",
-    "MAX_PRICE": "Price limit",
+    "TITLE": "Let the desired journey begin",
+    "ORIGIN": "From",
+    "ONE_WAY": "One way flight",
     "VIEW_BY": "Group flights by"
-  },
-  "DEPARTURE_DATE": {
-    "START": "Start departure date",
-    "END": "End departure date"
   }
 }

@@ -1,5 +1,4 @@
 import { Moment } from 'moment';
-import { ViewByOptions } from './view-by-options';
 
 export interface Search {
   origin: string;
@@ -8,5 +7,5 @@ export interface Search {
   duration: string;
   nonStop: boolean;
   maxPrice: number;
-  viewBy: ViewByOptions;
+  viewBy: string[];
 }

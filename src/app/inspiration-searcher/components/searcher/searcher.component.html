@@ -1,19 +1,46 @@
-<div [formGroup]="formGroup" (ngSubmit)="searchInspirationSearch()" fxLayout="column" fxLayoutGap="2em" autocomplete="off" (keydown)="searchInspirationSearch($event)">
-  <mat-form-field appearance="fill" fxFlex>
-    <mat-label>{{ 'SEARCHER.ORIGIN' | translate}}</mat-label>
-    <mat-select formControlName="origin" attr.aria-label="{{ 'SEARCHER.ORIGIN' | translate}}" [placeholder]="'SEARCHER.ORIGIN' | translate">
-      <mat-option *ngFor="let iata of iataCodes" [value]="iata">
-        {{iata}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="fill" fxFlex>
-    <mat-label>{{'SEARCHER.DEPARTURE_DATE' | translate}}</mat-label>
-    <mat-date-range-input formGroupName="departureDate" [rangePicker]="departureDatPicker" [dateFilter]="rangeFilter">
-      <input matStartDate formControlName="departureStart" [placeholder]="'DEPARTURE_DATE.START' | translate">
-      <input matEndDate formControlName="departureEnd" [placeholder]="'DEPARTURE_DATE.END' | translate">
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="departureDatPicker"></mat-datepicker-toggle>
-    <mat-date-range-picker #departureDatPicker></mat-date-range-picker>
-  </mat-form-field>
-</div>
+<mat-card [formGroup]="formGroup" (ngSubmit)="searchInspirationSearch()" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2em" autocomplete="off" (keydown)="searchInspirationSearch($event)">
+  <mat-card-title>{{ 'SEARCHER.TITLE' | translate}}</mat-card-title>
+<mat-card-content>
+  <div fxLayout="row" fxLayoutGap="2em">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'SEARCHER.ORIGIN' | translate}}</mat-label>
+      <!-- matautocomplete -->
+      <mat-select formControlName="origin" attr.aria-label="{{ 'SEARCHER.ORIGIN' | translate}}" [placeholder]="'SEARCHER.ORIGIN' | translate">
+        <mat-option *ngFor="let iata of iataCodes" [value]="iata">
+          {{iata}} - {{iata}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{'SEARCHER.DEPARTURE_DATE' | translate}}</mat-label>
+      <mat-date-range-input formGroupName="departureDate" [rangePicker]="departureDatPicker" [dateFilter]="rangeFilter">
+        <input matStartDate formControlName="departureStart" [placeholder]="'DEPARTURE_DATE.START' | translate">
+        <input matEndDate formControlName="departureEnd" [placeholder]="'DEPARTURE_DATE.END' | translate">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="departureDatPicker"></mat-datepicker-toggle>
+      <mat-date-range-picker #departureDatPicker></mat-date-range-picker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'SEARCHER.MAX_PRICE' | translate}}</mat-label>
+    <input matInput type="number" formControlName="maxPrice">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'SEARCHER.VIEW_BY' | translate}}</mat-label>
+      <mat-select formControlName="viewBy" attr.aria-label="{{ 'SEARCHER.VIEW_BY' | translate}}" [placeholder]="'SEARCHER.VIEW_BY' | translate">
+        <mat-option *ngFor="let view of viewBy" [value]="view">
+          {{view}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <lib-ngx-mat-range-slider formGroupName="duration" [min]="1" [max]="15" (output)="setValuesDuration($event)"></lib-ngx-mat-range-slider>
+    <button matSuffix mat-icon-button>
+      <mat-icon matTooltip="{{'SEARCHER.DEPARTURE_DATE_LOWER_THAN_180_DAYS_TOOLTIP' | translate}}">help_outline</mat-icon>
+    </button>
+  </div>
+  <mat-checkbox formControlName="oneWay">{{'SEARCHER.ONE_WAY' | translate}}</mat-checkbox>
+  <mat-checkbox formControlName="nonStop">{{'SEARCHER.NON_STOP' | translate}}</mat-checkbox>
+</mat-card-content>
+<mat-card-footer>
+  {{ 'FOOTER.DEVELOPED_BY' | translate}}
+</mat-card-footer>
+</mat-card>

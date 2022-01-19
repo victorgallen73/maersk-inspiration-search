@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LIMIT_DAYS_AFTER_DEPARTURE_DATE } from '../../models/constants';
+import { RangeType } from 'ngx-mat-range-slider';
+import { LIMIT_DAYS_AFTER_DEPARTURE_DATE, VIEW_BY_OPTIONS } from '../../models/constants';
 import { Search } from '../../models/search';
-import { ViewByOptions } from '../../models/view-by-options';
 
 @Component({
   selector: 'mis-searcher',
@@ -11,9 +11,25 @@ import { ViewByOptions } from '../../models/view-by-options';
 })
 export class SearcherComponent implements OnInit {
 
-  formGroup!: FormGroup;
   iataCodes: string[] = ['MAD','VLC','BAR'];
+  viewBy: string[] = VIEW_BY_OPTIONS;
   // futureDayLimit: Date = new Date();
+
+  formGroup: FormGroup = this.fb.group({
+    origin: [{initialValueIsDefault: this.iataCodes}, Validators.required],
+    departureDate: this.fb.group({
+      departureStart: [{initialValueIsDefault: ''}],
+      departureEnd: [{initialValueIsDefault: ''}],
+    }),
+    oneWay: [],
+    duration: this.fb.group({
+      min: [{initialValueIsDefault: 1}],
+      max: [{initialValueIsDefault: 1}],
+    }),
+    nonStop: [],
+    maxPrice: [{initialValueIsDefault: 0}],
+    viewBy: [{initialValueIsDefault: this.viewBy}],
+  });
 
   @Output() searchEmitter: EventEmitter<Search> = new EventEmitter<Search>();
 
@@ -27,26 +43,40 @@ export class SearcherComponent implements OnInit {
     // this.setDepartureDatesLimits();
   }
 
+  ngOnChanges() {
+    this.formGroup.get('oneWay')?.valueChanges.pipe().subscribe(selectedValue => {
+      if (selectedValue) {
+        this.formGroup.get('minDuration')?.reset();
+        this.formGroup.get('minDuration')?.disable();
+        this.formGroup.get('maxDuration')?.reset();
+        this.formGroup.get('maxDuration')?.disable();
+        this.formGroup.get('viewBy')?.setValue('DATE');
+      } else {
+        this.formGroup.get('viewBy')?.setValue('DURATION');
+      }
+    });
+  }
+
   buildForm() {
     this.formGroup = this.fb.group({
-      origin: [{initialValueIsDefault: ''}, Validators.required],
+      origin: [{initialValueIsDefault: this.iataCodes}, Validators.required],
       departureDate: this.fb.group({
         departureStart: [{initialValueIsDefault: ''}],
         departureEnd: [{initialValueIsDefault: ''}],
       }),
-      oneWay: [{initialValueIsDefault: false}],
+      oneWay: [],
       duration: this.fb.group({
-        durationStart: [{initialValueIsDefault: ''}],
-        durationEnd: [{initialValueIsDefault: ''}],
+        min: [{initialValueIsDefault: 1}],
+        max: [{initialValueIsDefault: 15}],
       }),
-      nonStop: [{initialValueIsDefault: false}],
+      nonStop: [],
       maxPrice: [{initialValueIsDefault: 0}],
-      viewBy: [{initialValueIsDefault: ''}],
+      viewBy: [{initialValueIsDefault: this.viewBy}],
     })
   }
 
   getOptions() {
-    this.formGroup.get('origin')?.patchValue(ViewByOptions);
+    // this.formGroup.get('origin')?.patchValue(ViewByOptions);
     // TODO: Call method to get IATA Codes of the cities
   }
 
@@ -61,6 +91,11 @@ export class SearcherComponent implements OnInit {
     yesterday.setDate(yesterday.getDate() - 1);
     return date.getTime() > yesterday.getTime() && date.getTime() <= futureDate.getTime();
   };
+
+  setValuesDuration(range: RangeType) {
+    this.formGroup.get('duration.min')?.patchValue(range.min);
+    this.formGroup.get('duration.max')?.patchValue(range.max);
+  }
 
   searchInspirationSearch(event?: KeyboardEvent) {
     if (event) {

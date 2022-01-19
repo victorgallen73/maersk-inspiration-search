@@ -25,6 +25,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "amadeus": "^5.7.1",
     "moment": "^2.29.1",
+    "ngx-mat-range-slider": "^0.1.2",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
