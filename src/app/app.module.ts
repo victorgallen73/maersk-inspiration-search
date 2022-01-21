@@ -13,6 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { registerLocaleData } from '@angular/common';
 import * as locale from '@angular/common/locales/en-DK';
 import { AuthInterceptorService } from './auth/services/auth-interceptor.service';
+import { AuthModule } from './auth/auth.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -26,6 +27,7 @@ registerLocaleData(locale, 'en-DK')
     AppComponent
   ],
   imports: [
+    AuthModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -41,7 +43,7 @@ registerLocaleData(locale, 'en-DK')
           deps: [HttpClient],
       },
       defaultLanguage: 'en'
-  })
+  }),
   ],
   providers: [
     {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { TokenService } from '../services/amadeus-token.service';
+import { Observable, of, switchMap } from 'rxjs';
+import { AmadeusTokenService } from '../services/amadeus-token.service';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -10,27 +11,23 @@ export class AuthGuard implements CanActivate {
 
   constructor(
     private authService: AuthService,
-    private tokenService: TokenService,
+    private amadeusTokenService: AmadeusTokenService,
     private router: Router) {
   }
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-    const url: string = state.url;
-
-    return this.checkToken(url);
+    state: RouterStateSnapshot): Observable<boolean> {
+    return this.checkToken();
   }
 
-  checkToken(url: string): boolean {
-    if (this.tokenService.getToken()) {
-      return true;
-    }
-    this.authService.refreshToken();
-    this.authService.redirectUrl = url;
-
-    this.router.navigate(['']).then(_ => false);
-    return false;
+  checkToken(): Observable<boolean> {
+    // return !!this.amadeusTokenService.getToken();
+    return this.authService.getToken().pipe(
+      switchMap((token: string) => {
+        return token ? of(true): of(false);
+      })
+    )
   }
 
 }

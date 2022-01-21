@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, tap, throwError } from 'rxjs';
-import { TokenService } from './amadeus-token.service';
+import { catchError, delay, delayWhen, Observable, repeat, repeatWhen, ReplaySubject, tap, throwError, timer } from 'rxjs';
+import { AmadeusTokenService } from './amadeus-token.service';
+import { AmadeusToken } from '../models/amadeus-token';
 
 const HTTP_OPTIONS = {
   headers: new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: 'Basic ' + btoa(environment.AMADEUS_CLIENT_ID + ':' + environment.AMADEUS_CLIENT_SECRET)
+    // Authorization: 'Basic ' + btoa(environment.AMADEUS_CLIENT_ID + ':' + environment.AMADEUS_CLIENT_SECRET)
   })
 };
 
-@Injectable()
+@Injectable(
+  { providedIn: "root"
+})
 export class AuthService {
-  redirectUrl = '';
+
+  accessToken$: ReplaySubject<string> = new ReplaySubject<string>(1);
 
   private static handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
@@ -28,18 +32,27 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService,
-  ) { }
+    private amadeusTokenService: AmadeusTokenService,
+  ) {
+    // get token from API
+    this.refreshToken().subscribe();
+  }
 
-  refreshToken(): Observable<any> {
-    this.tokenService.removeToken();
+  getToken(): Observable<string> {
+    return this.accessToken$.asObservable();
+  }
+
+  private refreshToken(): Observable<any> {
+    this.amadeusTokenService.removeToken();
     let body = `grant_type=client_credentials&client_id=${environment.AMADEUS_CLIENT_ID}&client_secret=${environment.AMADEUS_CLIENT_SECRET}`;
-
-    return this.http.post<any>(environment.apiURL, body, HTTP_OPTIONS)
+    return this.http.post<any>(environment.apiURL + '/security/oauth2/token', body, HTTP_OPTIONS)
       .pipe(
         tap(res => {
-          this.tokenService.saveToken(res.access_token);
+          this.amadeusTokenService.saveToken(res.access_token);
+          this.accessToken$.next(res.access_token);
         }),
+        delayWhen((token: AmadeusToken) => timer(token.expires_in)),
+        repeat(),
         catchError(AuthService.handleError)
       );
   }

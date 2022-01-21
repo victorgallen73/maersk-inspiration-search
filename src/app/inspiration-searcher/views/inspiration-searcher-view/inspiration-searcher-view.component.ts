@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Search } from '../../models/search';
 
 @Component({
   selector: 'mis-inspiration-searcher-view',
@@ -10,6 +11,10 @@ export class InspirationSearcherViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  searchInspirationFlights(criteria: Search) {
+
   }
 
 }

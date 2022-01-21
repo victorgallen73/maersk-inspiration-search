@@ -1,31 +1,25 @@
 import { HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { TokenService } from './amadeus-token.service';
+import { catchError, filter, map, tap } from 'rxjs/operators';
+import { AmadeusTokenService } from './amadeus-token.service';
 import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptorService {
 
   constructor(
-    private router: Router,
-    private tokenService: TokenService,
+    private amadeusTokenService: AmadeusTokenService,
     private authService: AuthService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): any {
 
-    const token = this.tokenService.getToken();
-
-    if (token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: 'Bearer ' + token
-        }
-      });
-    }
+    // const token = this.amadeusTokenService.getToken();
+    this.authService.getToken().pipe(
+      filter((token: string) => token !== undefined),
+      tap((token: string) => this.setTokenToHeader(token, request))
+    ).subscribe();
 
     if (!request.headers.has('Content-Type')) {
       request = request.clone({
@@ -50,5 +44,13 @@ export class AuthInterceptorService {
         console.log(error.error.error);
         return throwError(() => new Error('Error ocurred: ' + error.error.error));
       }));
+  }
+
+  private setTokenToHeader(token: string, request: HttpRequest<any>) {
+    request = request.clone({
+      setHeaders: {
+        Authorization: 'Bearer ' + token
+      }
+    });
   }
 }

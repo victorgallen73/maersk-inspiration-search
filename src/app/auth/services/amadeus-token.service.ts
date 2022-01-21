@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class TokenService {
+export class AmadeusTokenService {
 
   constructor() {
   }

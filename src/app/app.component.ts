@@ -3,6 +3,7 @@ import { DateAdapter } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
+import { AuthService } from './auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ export class AppComponent {
 
   constructor(
     private translate: TranslateService,
-    private dateAdapter: DateAdapter<any>
+    private dateAdapter: DateAdapter<any>,
+    private authService: AuthService
     ) {
 
     // this language will be used as a fallback when a translation isn't found in the current language
