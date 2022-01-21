@@ -97,7 +97,7 @@ export class SearcherComponent implements OnInit {
     this.formGroup.get('duration.max')?.patchValue(range.max);
   }
 
-  searchInspirationSearch(event?: KeyboardEvent) {
+  searchInspirationFlights(event?: KeyboardEvent) {
     if (event) {
       event.stopPropagation();
       if (event.key === 'Enter') {
