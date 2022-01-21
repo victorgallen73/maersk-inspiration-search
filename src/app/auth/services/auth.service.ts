@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, delay, delayWhen, Observable, repeat, repeatWhen, ReplaySubject, tap, throwError, timer } from 'rxjs';
-import { AmadeusTokenService } from './amadeus-token.service';
+import { catchError, delayWhen, Observable, repeat, ReplaySubject, tap, throwError, timer } from 'rxjs';
 import { AmadeusToken } from '../models/amadeus-token';
+import { AmadeusTokenService } from './amadeus-token.service';
 
 const HTTP_OPTIONS = {
   headers: new HttpHeaders({
@@ -51,7 +51,7 @@ export class AuthService {
           this.amadeusTokenService.saveToken(res.access_token);
           this.accessToken$.next(res.access_token);
         }),
-        delayWhen((token: AmadeusToken) => timer(token.expires_in)),
+        delayWhen((token: AmadeusToken) => timer(token.expires_in * 1000)),
         repeat(),
         catchError(AuthService.handleError)
       );

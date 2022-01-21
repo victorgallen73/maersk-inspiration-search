@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Search } from '../../models/search';
+import { FlightInspirationSearchService } from '../../services/flight-inspiration-search.service';
 
 @Component({
   selector: 'mis-inspiration-searcher-view',
@@ -8,13 +9,18 @@ import { Search } from '../../models/search';
 })
 export class InspirationSearcherViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private inspirationSearchService: FlightInspirationSearchService
+  ) { }
 
   ngOnInit(): void {
   }
 
   searchInspirationFlights(criteria: Search) {
-
+    // this.inspirationSearchService.getFlightDestinations(criteria.origin, criteria.departureDate, criteria.oneWay
+    //   criteria.duration, criteria.nonStop, criteria.maxPrice);
+    this.inspirationSearchService.getFlightDestinations(criteria.origin, '2017-12-25,2017-12-30', criteria.oneWay,
+      '2,8', criteria.nonStop, criteria.maxPrice);
   }
 
 }

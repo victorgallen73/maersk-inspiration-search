@@ -9,17 +9,23 @@ import { AuthService } from './auth.service';
 export class AuthInterceptorService {
 
   constructor(
-    private amadeusTokenService: AmadeusTokenService,
-    private authService: AuthService) {
+    private amadeusTokenService: AmadeusTokenService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): any {
 
-    // const token = this.amadeusTokenService.getToken();
-    this.authService.getToken().pipe(
-      filter((token: string) => token !== undefined),
-      tap((token: string) => this.setTokenToHeader(token, request))
-    ).subscribe();
+    const token = this.amadeusTokenService.getToken();
+    if (token) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: 'Bearer ' + token
+        }
+      });
+    }
+    // this.authService.getToken().pipe(
+    //   filter((token: string) => token !== undefined),
+    //   tap((token: string) => this.setTokenToHeader(token, request))
+    // ).subscribe();
 
     if (!request.headers.has('Content-Type')) {
       request = request.clone({
@@ -44,13 +50,5 @@ export class AuthInterceptorService {
         console.log(error.error.error);
         return throwError(() => new Error('Error ocurred: ' + error.error.error));
       }));
-  }
-
-  private setTokenToHeader(token: string, request: HttpRequest<any>) {
-    request = request.clone({
-      setHeaders: {
-        Authorization: 'Bearer ' + token
-      }
-    });
   }
 }
