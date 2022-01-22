@@ -5,12 +5,14 @@
     <div class="content">
       <mat-form-field appearance="fill">
         <mat-label>{{ 'SEARCHER.ORIGIN' | translate}}</mat-label>
-        <!-- matautocomplete -->
-        <mat-select formControlName="origin" attr.aria-label="{{ 'SEARCHER.ORIGIN' | translate}}" [placeholder]="'SEARCHER.ORIGIN' | translate">
-          <mat-option *ngFor="let iata of iataCodes" [value]="iata">
-            {{iata}} - {{iata}}
+        <input matInput type="text" formControlName="origin" [matAutocomplete]="autoAirport"
+        [placeholder]="'SEARCHER.ORIGIN' | translate" attr.aria-label="'SEARCHER.ORIGIN' | translate}}">
+        <mat-autocomplete #autoAirport="matAutocomplete" [displayWith]="displayValue">
+          <mat-option *ngFor="let airport of airports$ | async" [value]="airport">
+            {{airport.name}} ( {{airport.iata}} )
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
+        <mat-icon matSuffix matTooltip="{{'SEARCHER.ORIGIN_TOOLTIP' | translate}}">help_outline</mat-icon>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>{{'SEARCHER.DEPARTURE_DATE' | translate}}</mat-label>
@@ -45,7 +47,6 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <!-- <button mat-raised-button [disabled]="!formGroup.valid" color="primary" (click)="searchInspirationFlights()"></button> -->
     <button mat-raised-button [disabled]="!formGroup.valid" (click)="searchInspirationFlights()" color="primary">
       {{'SEARCHER.SEARCH_BUTTON' | translate}}
     </button>

@@ -1,8 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RangeType } from 'ngx-mat-range-slider';
+import { debounceTime, distinctUntilChanged, filter, Observable, tap } from 'rxjs';
+import { Airport, Airports } from '../../models/airports';
 import { LIMIT_DAYS_AFTER_DEPARTURE_DATE, VIEW_BY_OPTIONS } from '../../models/constants';
 import { Search } from '../../models/search';
+import { FlightInspirationSearchService } from '../../services/flight-inspiration-search.service';
 
 @Component({
   selector: 'mis-searcher',
@@ -11,12 +14,11 @@ import { Search } from '../../models/search';
 })
 export class SearcherComponent implements OnInit {
 
-  iataCodes: string[] = ['MAD','VLC','BAR'];
+  airports$!: Observable<Airports>;
   viewBy: string[] = VIEW_BY_OPTIONS;
-  // futureDayLimit: Date = new Date();
 
   formGroup: FormGroup = this.fb.group({
-    origin: [{initialValueIsDefault: this.iataCodes}, Validators.required],
+    origin: [Validators.required],
     departureDate: this.fb.group({
       departureStart: [{initialValueIsDefault: ''}],
       departureEnd: [{initialValueIsDefault: ''}],
@@ -34,16 +36,20 @@ export class SearcherComponent implements OnInit {
   @Output() searchEmitter: EventEmitter<Search> = new EventEmitter<Search>();
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private inspirationSearchService: FlightInspirationSearchService
   ) { }
 
   ngOnInit(): void {
-    this.buildForm();
     this.getOptions();
-    // this.setDepartureDatesLimits();
+    this.initObservables();
   }
 
-  ngOnChanges() {
+  getOptions() {
+    this.airports$ = this.inspirationSearchService.getAirports();
+  }
+
+  initObservables() {
     this.formGroup.get('oneWay')?.valueChanges.pipe().subscribe(selectedValue => {
       if (selectedValue) {
         this.formGroup.get('duration.min')?.reset();
@@ -54,34 +60,20 @@ export class SearcherComponent implements OnInit {
         this.formGroup.get('viewBy')?.setValue('DURATION');
       }
     });
+
+    // Filter airports that includes the string value (if exists)
+    this.formGroup.get('origin')?.valueChanges.pipe(
+      debounceTime(500),
+      filter((value) => value !== undefined && typeof value === 'string'),
+      distinctUntilChanged( (prev: string, curr: string) => prev === curr),
+      tap((query: string) => this.inspirationSearchService.loadAirports(query)),
+    ).subscribe();
+
   }
 
-  buildForm() {
-    this.formGroup = this.fb.group({
-      origin: [{value: this.iataCodes}, Validators.required],
-      departureDate: this.fb.group({
-        departureStart: [{value: ''}],
-        departureEnd: [{value: ''}],
-      }),
-      oneWay: [],
-      duration: this.fb.group({
-        min: [{value: 1}],
-        max: [{value: 15}],
-      }),
-      nonStop: [],
-      maxPrice: [{value: 0}],
-      viewBy: [{value: this.viewBy}],
-    })
+  displayValue(airport: Airport) {
+    return airport && airport.iata && airport.name ? airport.name + ' (' + airport.iata + ')': airport.iata;
   }
-
-  getOptions() {
-    // this.formGroup.get('origin')?.patchValue(ViewByOptions);
-    // TODO: Call method to get IATA Codes of the cities
-  }
-
-  // setDepartureDatesLimits(): void {
-  //   this.futureDayLimit.setDate(this.futureDayLimit.getDate() + LIMIT_DAYS_AFTER_DEPARTURE_DATE);
-  // }
 
   rangeFilter = (date: Date): boolean => {
     let futureDate = new Date();
