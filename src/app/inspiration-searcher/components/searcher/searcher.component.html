@@ -47,8 +47,10 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button [disabled]="!formGroup.valid" (click)="searchInspirationFlights()" color="primary">
+    <!-- [disabled]="!formGroup.valid" -->
+    <button mat-raised-button (click)="searchInspirationFlights()" color="primary">
       {{'SEARCHER.SEARCH_BUTTON' | translate}}
+      <mat-icon>airplane_ticket</mat-icon>
     </button>
   </mat-card-actions>
   <mat-card-footer>

@@ -18,18 +18,18 @@ export class SearcherComponent implements OnInit {
   viewBy: string[] = VIEW_BY_OPTIONS;
 
   formGroup: FormGroup = this.fb.group({
-    origin: [Validators.required],
+    origin: [{initialValueIsDefault: null}, Validators.required],
     departureDate: this.fb.group({
-      departureStart: [{initialValueIsDefault: ''}],
-      departureEnd: [{initialValueIsDefault: ''}],
+      departureStart: [{initialValueIsDefault: null}],
+      departureEnd: [{initialValueIsDefault: null}],
     }),
     oneWay: [],
     duration: this.fb.group({
-      min: [{initialValueIsDefault: 1}],
-      max: [{initialValueIsDefault: 1}],
+      min: [{initialValueIsDefault: null}],
+      max: [{initialValueIsDefault: null}],
     }),
     nonStop: [],
-    maxPrice: [{initialValueIsDefault: 0}],
+    maxPrice: [{initialValueIsDefault: null}],
     viewBy: [{initialValueIsDefault: this.viewBy}],
   });
 

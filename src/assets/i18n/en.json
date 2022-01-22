@@ -17,7 +17,7 @@
     "SEARCH_BUTTON": "Search flights",
     "TITLE": "Let the desired journey begin",
     "ORIGIN": "City",
-    "ORIGIN_TOOLTIP": "Type the name of the departure city ...",
+    "ORIGIN_TOOLTIP": "Type the name of the airport or city ...",
     "ONE_WAY": "One way flight",
     "VIEW_BY": "Group flights by"
   }

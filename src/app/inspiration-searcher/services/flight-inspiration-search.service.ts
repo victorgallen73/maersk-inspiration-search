@@ -21,7 +21,9 @@ export class FlightInspirationSearchService {
       map((airports: any) => JSON.stringify(airports)),
       map((airports: string) => JSON.parse(airports)),
       map((airports: Airports) => query?
-        airports.filter(airport => airport.name.toUpperCase().includes(query?.toUpperCase()) || airport.name.toUpperCase().includes(query?.toUpperCase())): airports),
+        airports.filter(airport => airport.name.toUpperCase().includes(query?.toUpperCase())
+          || airport.iata.toUpperCase().includes(query?.toUpperCase())
+          || airport.city.toUpperCase().includes(query?.toUpperCase())): airports),
       tap((airports: Airports) => this.airports.next(airports))
     ).subscribe();
   }
