@@ -29,7 +29,7 @@ export class SearcherComponent implements OnInit {
       max: [{initialValueIsDefault: null}],
     }),
     nonStop: [],
-    maxPrice: [{initialValueIsDefault: null}],
+    maxPrice: [''],
     viewBy: [{initialValueIsDefault: this.viewBy}],
   });
 
@@ -88,20 +88,10 @@ export class SearcherComponent implements OnInit {
     this.formGroup.get('duration.max')?.patchValue(range.max);
   }
 
-  searchInspirationFlights(event?: KeyboardEvent) {
-    if (event) {
-      event.stopPropagation();
-      if (event.key === 'Enter') {
-        this.emitSearch();
-        return;
-      }
-    }
-    this.emitSearch();
+  searchInspirationFlights() {
+    const formValues = this.formGroup.getRawValue();
+    // TODO: parse values to bind them to the endpoint
+    // let criteria: Search = new Search(formValues.origin? formValues.origin.iata: '', )
+    this.searchEmitter.emit(formValues);
   }
-
-  emitSearch() {
-    const query = this.formGroup.getRawValue();
-    this.searchEmitter.emit(query);
-  }
-
 }
