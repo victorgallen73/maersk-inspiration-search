@@ -46,10 +46,9 @@ export class SearcherComponent implements OnInit {
   ngOnChanges() {
     this.formGroup.get('oneWay')?.valueChanges.pipe().subscribe(selectedValue => {
       if (selectedValue) {
-        this.formGroup.get('minDuration')?.reset();
-        this.formGroup.get('minDuration')?.disable();
-        this.formGroup.get('maxDuration')?.reset();
-        this.formGroup.get('maxDuration')?.disable();
+        this.formGroup.get('duration.min')?.reset();
+        this.formGroup.get('duration.max')?.reset();
+        this.formGroup.get('duration')?.disable();
         this.formGroup.get('viewBy')?.setValue('DATE');
       } else {
         this.formGroup.get('viewBy')?.setValue('DURATION');
@@ -59,19 +58,19 @@ export class SearcherComponent implements OnInit {
 
   buildForm() {
     this.formGroup = this.fb.group({
-      origin: [{initialValueIsDefault: this.iataCodes}, Validators.required],
+      origin: [{value: this.iataCodes}, Validators.required],
       departureDate: this.fb.group({
-        departureStart: [{initialValueIsDefault: ''}],
-        departureEnd: [{initialValueIsDefault: ''}],
+        departureStart: [{value: ''}],
+        departureEnd: [{value: ''}],
       }),
       oneWay: [],
       duration: this.fb.group({
-        min: [{initialValueIsDefault: 1}],
-        max: [{initialValueIsDefault: 15}],
+        min: [{value: 1}],
+        max: [{value: 15}],
       }),
       nonStop: [],
-      maxPrice: [{initialValueIsDefault: 0}],
-      viewBy: [{initialValueIsDefault: this.viewBy}],
+      maxPrice: [{value: 0}],
+      viewBy: [{value: this.viewBy}],
     })
   }
 

@@ -36,17 +36,22 @@
     </div>
     <div class="content">
       <mat-label>{{ 'SEARCHER.DURATION' | translate}}</mat-label>
-        <lib-ngx-mat-range-slider formGroupName="duration" [min]="1" [max]="15" (output)="setValuesDuration($event)"></lib-ngx-mat-range-slider>
+        <lib-ngx-mat-range-slider [min]="1" [max]="15" (output)="setValuesDuration($event)"></lib-ngx-mat-range-slider>
         <button matSuffix mat-icon-button>
           <mat-icon matTooltip="{{'SEARCHER.DURATION_TOOLTIP' | translate}}">help_outline</mat-icon>
         </button>
       <mat-checkbox formControlName="oneWay">{{'SEARCHER.ONE_WAY' | translate}}</mat-checkbox>
       <mat-checkbox formControlName="nonStop">{{'SEARCHER.NON_STOP' | translate}}</mat-checkbox>
     </div>
-    <button mat-raised-button [disabled]="!formGroup.valid" color="primary" (click)="searchInspirationFlights()">
-    </button>
   </mat-card-content>
+  <mat-card-actions>
+    <!-- <button mat-raised-button [disabled]="!formGroup.valid" color="primary" (click)="searchInspirationFlights()"></button> -->
+    <button mat-raised-button [disabled]="!formGroup.valid" (click)="searchInspirationFlights()" color="primary">
+      {{'SEARCHER.SEARCH_BUTTON' | translate}}
+    </button>
+  </mat-card-actions>
   <mat-card-footer>
+    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
     {{ 'FOOTER.DEVELOPED_BY' | translate}}
   </mat-card-footer>
 </mat-card>
