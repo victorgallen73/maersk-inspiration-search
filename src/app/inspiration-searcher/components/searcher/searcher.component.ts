@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as moment from 'moment';
 import { RangeType } from 'ngx-mat-range-slider';
 import { debounceTime, distinctUntilChanged, filter, Observable, tap } from 'rxjs';
 import { Airport, Airports } from '../../models/airports';
@@ -10,9 +11,9 @@ import { FlightInspirationSearchService } from '../../services/flight-inspiratio
 @Component({
   selector: 'mis-searcher',
   templateUrl: './searcher.component.html',
-  styleUrls: ['./searcher.component.scss']
+  styleUrls: ['./searcher.component.scss'],
 })
-export class SearcherComponent implements OnInit {
+export class SearcherComponent implements OnInit, AfterContentInit {
 
   airports$!: Observable<Airports>;
   viewBy: string[] = VIEW_BY_OPTIONS;
@@ -20,29 +21,35 @@ export class SearcherComponent implements OnInit {
   formGroup: FormGroup = this.fb.group({
     origin: [{initialValueIsDefault: null}, Validators.required],
     departureDate: this.fb.group({
-      departureStart: [{initialValueIsDefault: null}],
-      departureEnd: [{initialValueIsDefault: null}],
+      departureStart: [''],
+      departureEnd: [''],
     }),
-    oneWay: [],
+    oneWay: [false],
     duration: this.fb.group({
       min: [{initialValueIsDefault: null}],
       max: [{initialValueIsDefault: null}],
     }),
-    nonStop: [],
+    nonStop: [false],
     maxPrice: [''],
-    viewBy: [{initialValueIsDefault: this.viewBy}],
+    viewBy: [{initialValueIsDefault: 'DESTINATION'}],
   });
 
-  @Output() searchEmitter: EventEmitter<Search> = new EventEmitter<Search>();
+  @Output() searchEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
-    private inspirationSearchService: FlightInspirationSearchService
+    private inspirationSearchService: FlightInspirationSearchService,
   ) { }
+
 
   ngOnInit(): void {
     this.getOptions();
     this.initObservables();
+  }
+
+  ngAfterContentInit(): void {
+    // Set default value to viewBy form control
+    this.formGroup.get('viewBy')?.setValue('DURATION');
   }
 
   getOptions() {
@@ -72,7 +79,7 @@ export class SearcherComponent implements OnInit {
   }
 
   displayValue(airport: Airport) {
-    return airport && airport.iata && airport.name ? airport.name + ' (' + airport.iata + ')': airport.iata;
+    return airport && airport.iata && airport.name ? airport.name + ' (' + airport.iata + ')': airport.name;
   }
 
   rangeFilter = (date: Date): boolean => {
@@ -88,10 +95,29 @@ export class SearcherComponent implements OnInit {
     this.formGroup.get('duration.max')?.patchValue(range.max);
   }
 
+  formatDepartureDate(startDate: Date, endDate: Date): string {
+    const startDateFormatted = moment(startDate).format('YYYY-MM-DD');
+    const endDateFormatted = moment(endDate).format('YYYY-MM-DD');
+    return startDateFormatted + ',' + endDateFormatted;
+  }
+
   searchInspirationFlights() {
     const formValues = this.formGroup.getRawValue();
-    // TODO: parse values to bind them to the endpoint
-    // let criteria: Search = new Search(formValues.origin? formValues.origin.iata: '', )
-    this.searchEmitter.emit(formValues);
+    const departureDate: string = formValues.departureDate.departureStart && formValues.departureDate.departureEnd ?
+      this.formatDepartureDate(formValues.departureDate.departureStart, formValues.departureDate.departureEnd) : '';
+    const duration = formValues.duration && formValues.duration.min && formValues.duration.max ?
+      formValues.duration.min + ',' + formValues.duration.max: '';
+
+    const search = {
+        origin: formValues.origin ? formValues.origin.iata : null,
+        departureDate: departureDate !== '' ? departureDate : null,
+        oneWay: formValues.oneWay,
+        duration: duration !== '' ? duration : null,
+        nonStop: formValues.nonStop,
+        maxPrice: formValues.maxPrice !== '' ? formValues.maxPrice : null,
+        viewBy: formValues.viewBy,
+      }
+
+    this.searchEmitter.emit(search);
   }
 }

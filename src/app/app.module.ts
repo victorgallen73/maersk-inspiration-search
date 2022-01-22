@@ -10,17 +10,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { registerLocaleData } from '@angular/common';
-import * as locale from '@angular/common/locales/en-DK';
 import { AuthInterceptorService } from './auth/services/auth-interceptor.service';
 import { AuthModule } from './auth/auth.module';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MY_DATE_FORMATS } from './shared/my-date-formats';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
-
-registerLocaleData(locale, 'en-DK')
 
 @NgModule({
   declarations: [
@@ -50,7 +48,9 @@ registerLocaleData(locale, 'en-DK')
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
       multi: true
-    }
+    },
+    // We must disable custom date formats because function rangeFilter throws error
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ],
   bootstrap: [AppComponent]
 })

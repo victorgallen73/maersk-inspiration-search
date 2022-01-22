@@ -16,11 +16,8 @@ export class InspirationSearcherViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  searchInspirationFlights(criteria: Search) {
-    // this.inspirationSearchService.getFlightDestinations(criteria.origin, criteria.departureDate, criteria.oneWay
-    //   criteria.duration, criteria.nonStop, criteria.maxPrice);
-    this.inspirationSearchService.getFlightDestinations(criteria.origin, '2017-12-25,2017-12-30', criteria.oneWay,
-      '2,8', criteria.nonStop, criteria.maxPrice);
+  searchInspirationFlights(search: Search) {
+    this.inspirationSearchService.searchFlightDestinations(search);
   }
 
 }

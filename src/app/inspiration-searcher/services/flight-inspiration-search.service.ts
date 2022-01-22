@@ -4,6 +4,7 @@ import { filter, map, Observable, ReplaySubject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Airports } from '../models/airports';
 import { FlightDestinations } from '../models/flight-destination';
+import { Search } from '../models/search';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,12 @@ export class FlightInspirationSearchService {
   private baseURL: string = environment.apiURL;
 
   private airports: ReplaySubject<Airports> = new ReplaySubject<Airports>(1);
+  private flights: ReplaySubject<FlightDestinations> = new ReplaySubject<FlightDestinations>(1);
 
   constructor(private httpClient: HttpClient) { }
 
-  loadAirports(query?: string) {
-    return this.httpClient.get("assets/iata-codes.json").pipe(
+  loadAirports(query?: string): void {
+    this.httpClient.get("assets/iata-codes.json").pipe(
       map((airports: any) => JSON.stringify(airports)),
       map((airports: string) => JSON.parse(airports)),
       map((airports: Airports) => query?
@@ -32,16 +34,23 @@ export class FlightInspirationSearchService {
     return this.airports.asObservable();
   }
 
-  getFlightDestinations(origin: string, departureDate?: string, oneWay?: boolean, duration?: string, nonStop?: boolean, maxPrice?: number, viewBy?: string): Observable<FlightDestinations> {
-    let params = new HttpParams().set('origin', origin);
-    departureDate ? params.set('departureDate', departureDate) : undefined;
-    oneWay ? params.set('oneWay', oneWay) : undefined;
-    duration ? params.set('duration', duration) : undefined;
-    nonStop ? params.set('nonStop', nonStop) : undefined;
-    maxPrice ? params.set('maxPrice', maxPrice) : undefined;
-    viewBy ? params.set('viewBy', viewBy) : undefined;
+  // searchFlightDestinations(origin: string, departureDate?: string, oneWay?: boolean, duration?: string, nonStop?: boolean, maxPrice?: number, viewBy?: string): void {
+  searchFlightDestinations(criteria: Search): void {
+    let params = new HttpParams()
+    .set('origin', criteria.origin)
+    .set('oneWay', criteria.oneWay)
+    .set('nonStop', criteria.nonStop)
+    .set('viewBy', criteria.viewBy);
+    params = criteria.departureDate ? params.set('departureDate', criteria.departureDate) : params;
+    params = criteria.duration ? params.set('duration', criteria.duration) : params;
+    params = criteria.maxPrice ? params.set('maxPrice', criteria.maxPrice) : params;
+    this.httpClient.get<FlightDestinations>(`${this.baseURL}/shopping/flight-destinations`, {params}).pipe(
+      tap((flights: FlightDestinations) => this.flights.next(flights))
+    ).subscribe();
+  }
 
-    return this.httpClient.get<FlightDestinations>(`${this.baseURL}/shopping/flights-destinations`, {params});
+  getFlightDestinations(): Observable<FlightDestinations> {
+    return this.flights.asObservable();
   }
 
 }

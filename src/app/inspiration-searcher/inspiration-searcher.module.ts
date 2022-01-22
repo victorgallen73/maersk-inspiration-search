@@ -6,6 +6,7 @@ import { SearcherComponent } from './components/searcher/searcher.component';
 import { InspirationSearcherViewComponent } from './views/inspiration-searcher-view/inspiration-searcher-view.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { FlightInspirationTableComponent } from './components/flight-inspiration-table/flight-inspiration-table.component';
 
 @NgModule({
   exports: [
@@ -13,7 +14,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   declarations: [
     SearcherComponent,
-    InspirationSearcherViewComponent
+    InspirationSearcherViewComponent,
+    FlightInspirationTableComponent
   ],
   imports: [
     CommonModule,

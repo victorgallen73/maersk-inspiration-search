@@ -17,10 +17,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { NgxMatRangeSliderModule} from 'ngx-mat-range-slider';
+import { OnlyDigitsDirective } from './directives/only-digits.directive';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    OnlyDigitsDirective,
+  ],
   imports: [
   ],
   exports: [
@@ -61,7 +64,6 @@ import { NgxMatRangeSliderModule} from 'ngx-mat-range-slider';
     NgxMatRangeSliderModule,
   ],
   providers:[
-    {provide: MAT_DATE_LOCALE, useValue: 'en-DK'}
   ]
 })
 export class SharedModule { }
