@@ -14,16 +14,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     ) { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-      console.log("Passed through the interceptor in request");
-
-        return next.handle(request)
-            .pipe(
-              map(res => {
-                console.log("Passed through the interceptor in response");
-                return res
-              }),
-              catchError((error: HttpErrorResponse) => this.handleHttpError(error))
-            )
+      return next.handle(request).pipe(
+        catchError((error: HttpErrorResponse) => this.handleHttpError(error))
+      )
     }
 
     private handleHttpError(error: HttpErrorResponse): Observable<any> {

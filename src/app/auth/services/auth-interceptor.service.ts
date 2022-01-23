@@ -47,7 +47,6 @@ export class AuthInterceptorService {
         return event;
       }),
       catchError((error: HttpErrorResponse) => {
-        console.log(error.error.error);
         return throwError(() => new Error('Error ocurred: ' + error.error.error));
       }));
   }
