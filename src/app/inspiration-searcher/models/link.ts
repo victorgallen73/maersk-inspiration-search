@@ -1,6 +1,4 @@
-export interface Links extends Array<Link> { };
-
-export interface Link {
+export interface Links  {
   flightDates: string;
   flightOffers: string;
 }

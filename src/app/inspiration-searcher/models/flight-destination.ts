@@ -1,7 +1,11 @@
+import { Dictionaries } from "./dictionary";
 import { Links } from "./link";
 import { Price } from "./price";
 
-export interface FlightDestinations extends Array<FlightDestination> { }
+export interface FlightDestinations {
+  data: Array<FlightDestination>;
+  dictionaries: Dictionaries;
+ }
 
 
 export interface FlightDestination {
