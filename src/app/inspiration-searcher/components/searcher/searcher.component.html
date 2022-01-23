@@ -1,6 +1,6 @@
 
-<mat-card class="card mat-elevation-z20" [formGroup]="formGroup" (ngSubmit)="searchInspirationFlights()" autocomplete="off">
-  <mat-card-title>{{ 'SEARCHER.TITLE' | translate}}</mat-card-title>
+<mat-card class="card mat-elevation-z5" [formGroup]="formGroup" (ngSubmit)="searchInspirationFlights()" autocomplete="off">
+  <!-- <mat-card-title>{{ 'SEARCHER.TITLE' | translate}}</mat-card-title> -->
   <mat-card-content>
     <div class="content">
       <mat-form-field appearance="fill">
@@ -27,23 +27,26 @@
         <mat-label>{{ 'SEARCHER.MAX_PRICE' | translate}}</mat-label>
       <input matInput type="text" formControlName="maxPrice" misOnlyDigits>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <!-- <mat-form-field appearance="fill">
         <mat-label>{{ 'SEARCHER.VIEW_BY' | translate}}</mat-label>
-        <mat-select formControlName="viewBy" attr.aria-label="{{ 'SEARCHER.VIEW_BY' | translate}}" [placeholder]="'SEARCHER.VIEW_BY' | translate">
+        <mat-select formControlName="viewBy" attr.aria-label="{{ 'SEARCHER.VIEW_BY' | translate}}"
+          [placeholder]="'SEARCHER.VIEW_BY' | translate">
           <mat-option *ngFor="let view of viewBy" [value]="view">
             {{view}}
           </mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
     <div class="content">
-      <mat-label>{{ 'SEARCHER.DURATION' | translate}}</mat-label>
-        <lib-ngx-mat-range-slider [min]="1" [max]="15" (output)="setValuesDuration($event)"></lib-ngx-mat-range-slider>
-        <button matSuffix mat-icon-button>
-          <mat-icon matTooltip="{{'SEARCHER.DURATION_TOOLTIP' | translate}}">help_outline</mat-icon>
-        </button>
       <mat-checkbox formControlName="oneWay">{{'SEARCHER.ONE_WAY' | translate}}</mat-checkbox>
       <mat-checkbox formControlName="nonStop">{{'SEARCHER.NON_STOP' | translate}}</mat-checkbox>
+      <mat-label>{{ 'SEARCHER.DURATION' | translate}}
+        <button mat-icon-button>
+          <mat-icon matSuffix matTooltip="{{'SEARCHER.DURATION_TOOLTIP' | translate}}">help_outline</mat-icon>
+        </button>
+      </mat-label>
+      <lib-ngx-mat-range-slider [min]="1" [max]="15" (output)="setValuesDuration($event)">
+      </lib-ngx-mat-range-slider>
     </div>
   </mat-card-content>
   <mat-card-actions>
@@ -54,7 +57,5 @@
     </button>
   </mat-card-actions>
   <mat-card-footer>
-    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
-    {{ 'FOOTER.DEVELOPED_BY' | translate}}
   </mat-card-footer>
 </mat-card>

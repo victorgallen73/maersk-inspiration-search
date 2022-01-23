@@ -40,7 +40,7 @@ export class FlightInspirationSearchService {
     .set('origin', criteria.origin)
     .set('oneWay', criteria.oneWay)
     .set('nonStop', criteria.nonStop)
-    .set('viewBy', criteria.viewBy);
+    // .set('viewBy', criteria.viewBy);
     params = criteria.departureDate ? params.set('departureDate', criteria.departureDate) : params;
     params = criteria.duration ? params.set('duration', criteria.duration) : params;
     params = criteria.maxPrice ? params.set('maxPrice', criteria.maxPrice) : params;

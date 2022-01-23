@@ -14,7 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule} from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
-import { MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MatNativeDateModule} from '@angular/material/core';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { NgxMatRangeSliderModule} from 'ngx-mat-range-slider';
 import { OnlyDigitsDirective } from './directives/only-digits.directive';
