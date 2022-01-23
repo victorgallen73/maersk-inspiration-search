@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FlightDestinations } from '../../models/flight-destination';
+import { FlightDestination } from '../../models/flight-destination';
 
 const ELEMENT_DATA = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -21,7 +21,7 @@ const ELEMENT_DATA = [
 })
 export class FlightInspirationTableComponent implements OnInit {
 
-  @Input() data!: FlightDestinations;
+  @Input() data!: FlightDestination[];
 
   displayedColumns: string[] = ['destination', 'departureDate', 'returnDate' , 'price.total', ];
   dataSource = ELEMENT_DATA;

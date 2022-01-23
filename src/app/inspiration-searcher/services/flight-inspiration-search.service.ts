@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { filter, map, Observable, ReplaySubject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Airports } from '../models/airports';
-import { FlightDestinations } from '../models/flight-destination';
+import { CurrencyDictionary } from '../models/currency-dictionary';
+import { FlightDestination, FlightDestinations } from '../models/flight-destination';
+import { LocationDictionary } from '../models/location-dictionary';
 import { Search } from '../models/search';
 
 @Injectable({
@@ -14,7 +16,9 @@ export class FlightInspirationSearchService {
   private baseURL: string = environment.apiURL;
 
   private airports: ReplaySubject<Airports> = new ReplaySubject<Airports>(1);
-  private flights: ReplaySubject<FlightDestinations> = new ReplaySubject<FlightDestinations>(1);
+  private flights: ReplaySubject<FlightDestination[]> = new ReplaySubject<FlightDestination[]>(1);
+  private currency: ReplaySubject<CurrencyDictionary> = new ReplaySubject<CurrencyDictionary>(1);
+  private locations: ReplaySubject<LocationDictionary> = new ReplaySubject<LocationDictionary>(1);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -45,11 +49,15 @@ export class FlightInspirationSearchService {
     params = criteria.duration ? params.set('duration', criteria.duration) : params;
     params = criteria.maxPrice ? params.set('maxPrice', criteria.maxPrice) : params;
     this.httpClient.get<FlightDestinations>(`${this.baseURL}/shopping/flight-destinations`, {params}).pipe(
-      tap((flights: FlightDestinations) => this.flights.next(flights))
+      tap((flights: FlightDestinations) => {
+        this.flights.next(flights.data);
+        this.currency.next(flights.dictionaries.currencies);
+        this.locations.next(flights.dictionaries.locations);
+      }),
     ).subscribe();
   }
 
-  getFlightDestinations(): Observable<FlightDestinations> {
+  getFlightDestinations(): Observable<FlightDestination[]> {
     return this.flights.asObservable();
   }
 

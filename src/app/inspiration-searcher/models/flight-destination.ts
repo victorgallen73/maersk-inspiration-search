@@ -7,7 +7,6 @@ export interface FlightDestinations {
   dictionaries: Dictionaries;
  }
 
-
 export interface FlightDestination {
   type: string;
   origin: string;
