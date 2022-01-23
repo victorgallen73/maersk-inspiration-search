@@ -18,6 +18,7 @@ import { MatNativeDateModule} from '@angular/material/core';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { NgxMatRangeSliderModule} from 'ngx-mat-range-slider';
 import { OnlyDigitsDirective } from './directives/only-digits.directive';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -54,7 +55,7 @@ import { OnlyDigitsDirective } from './directives/only-digits.directive';
     MatSelectModule,
     MatSliderModule,
     // MatSidenavModule,
-    // MatSnackBarModule,
+    MatSnackBarModule,
     // MatSortModule,
     MatTableModule,
     // MatTabsModule,
@@ -63,7 +64,6 @@ import { OnlyDigitsDirective } from './directives/only-digits.directive';
     // MatSliderModule,
     NgxMatRangeSliderModule,
   ],
-  providers:[
-  ]
+  providers:[]
 })
 export class SharedModule { }

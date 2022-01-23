@@ -14,6 +14,7 @@ import { AuthInterceptorService } from './auth/services/auth-interceptor.service
 import { AuthModule } from './auth/auth.module';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MY_DATE_FORMATS } from './shared/my-date-formats';
+import { HttpErrorInterceptor } from './services/http-error-interceptor';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -47,6 +48,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
       multi: true
     },
     // We must disable custom date formats because function rangeFilter throws error

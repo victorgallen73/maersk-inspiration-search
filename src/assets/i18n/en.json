@@ -1,4 +1,5 @@
 {
+  "CLOSE": "Close",
   "DEPARTURE_DATE": {
     "END": "End departure date",
     "START": "Start departure date"
