@@ -12,11 +12,12 @@
 
 ## Run the application
 
-### From src file
+### From rar file
 
 1. Create a new Angular project using Angular CLI with the following command: `ng new {{nameOfProject}}`
-2. Run the command `npm i`
-3. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+2. overwrite the src folder with the one inside the archive rar file
+3. Run the command `npm i` for every dependency that the project needs.
+4. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ### From Github
 
