@@ -1,16 +1,6 @@
 .card {
+  max-width: 54em;
   width: 54em;
+  min-width: 20em;
   border-radius: 0.7em;
-}
-
-table {
-  align-content: center;
-}
-
-td, th {
-  width: 35%;
-}
-
-.th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
-  padding-top: 15px;
 }

@@ -1,32 +1,32 @@
 <mat-card class="card mat-elevation-z8">
   <mat-card-content>
-    <mat-table mat-table [dataSource]="dataSource">
+    <mat-table [dataSource]="dataSource">
       <!-- Destination Column -->
       <ng-container matColumnDef="destination">
-        <th mat-header-cell *matHeaderCellDef>{{'RESULTS.DESTINATION' | translate}}</th>
-        <td mat-cell *matCellDef="let element"> {{element.destination}} </td>
+        <mat-header-cell *matHeaderCellDef>{{'RESULTS.DESTINATION' | translate}}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.destination}} </mat-cell>
       </ng-container>
 
       <!-- Departure Column -->
       <ng-container matColumnDef="departureDate">
         <mat-header-cell *matHeaderCellDef>{{'RESULTS.DEPARTURE_DATE' | translate}}</mat-header-cell>
-        <td mat-cell *matCellDef="let element"> {{element.departureDate}} </td>
+        <mat-cell *matCellDef="let element"> {{element.departureDate}} </mat-cell>
       </ng-container>
 
       <!-- Return Column -->
       <ng-container matColumnDef="returnDate">
-        <th mat-header-cell *matHeaderCellDef>{{'RESULTS.RETURN_DATE' | translate}}</th>
-        <td mat-cell *matCellDef="let element"> {{element.returnDate}} </td>
+        <mat-header-cell *matHeaderCellDef>{{'RESULTS.RETURN_DATE' | translate}}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.returnDate}} </mat-cell>
       </ng-container>
 
       <!-- Price Column -->
       <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef> {{'RESULTS.PRICE' | translate: currencyTranslate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.price.total}} </td>
+        <mat-header-cell *matHeaderCellDef> {{'RESULTS.PRICE' | translate: currencyTranslate}} </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.price.total}} </mat-cell>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
     </mat-table>
     <mat-paginator [pageSizeOptions]="[5, 10]" aria-label="Select page of flights"></mat-paginator>

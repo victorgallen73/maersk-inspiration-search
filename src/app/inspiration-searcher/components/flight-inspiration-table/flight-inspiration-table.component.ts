@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, tap } from 'rxjs';
 import { CurrencyDictionary } from '../../models/currency-dictionary';
@@ -17,7 +16,6 @@ export class FlightInspirationTableComponent implements OnInit, OnChanges, After
 
   @Input() dataSource!: MatTableDataSource<FlightDestination>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   displayedColumns: string[] = ['destination', 'departureDate', 'returnDate', 'price'];
 

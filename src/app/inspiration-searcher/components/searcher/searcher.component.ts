@@ -5,7 +5,6 @@ import { RangeType } from 'ngx-mat-range-slider';
 import { debounceTime, distinctUntilChanged, filter, Observable, tap } from 'rxjs';
 import { Airport, Airports } from '../../models/airports';
 import { LIMIT_DAYS_AFTER_DEPARTURE_DATE, VIEW_BY_OPTIONS } from '../../models/constants';
-import { Search } from '../../models/search';
 import { FlightInspirationSearchService } from '../../services/flight-inspiration-search.service';
 
 @Component({
