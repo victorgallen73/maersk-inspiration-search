@@ -1,18 +1,16 @@
 .card {
-  background: beige;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  width: 54em;
   border-radius: 0.7em;
 }
 
-.content {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 3em;
+table {
+  align-content: center;
+}
+
+td, th {
+  width: 35%;
+}
+
+.th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-top: 15px;
 }

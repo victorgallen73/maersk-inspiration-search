@@ -1,6 +1,6 @@
 .container {
+  flex: 0 1 60em;
   display: flex;
-  flex-flow:row wrap;
   justify-content: space-around;
   align-items: center;
   height: 100vh;
@@ -10,22 +10,18 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  flex-wrap: wrap;
   gap: 2em;
   align-items: center;
   background-color: #0b252e;
-  overflow: hidden;
-  overflow-y: hidden;
   border-radius: 1em;
   border: 0.1em solid beige;
-  height: 65em;
+  // height: 65em;
 }
 
 .content {
   display: flex;
   gap: 2em;
   flex-direction: column;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }

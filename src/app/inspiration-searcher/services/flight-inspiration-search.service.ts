@@ -17,7 +17,7 @@ export class FlightInspirationSearchService {
 
   private airports: ReplaySubject<Airports> = new ReplaySubject<Airports>(1);
   private flights: ReplaySubject<FlightDestination[]> = new ReplaySubject<FlightDestination[]>(1);
-  private currency: ReplaySubject<CurrencyDictionary> = new ReplaySubject<CurrencyDictionary>(1);
+  private currencies: ReplaySubject<CurrencyDictionary> = new ReplaySubject<CurrencyDictionary>(1);
   private locations: ReplaySubject<LocationDictionary> = new ReplaySubject<LocationDictionary>(1);
 
   constructor(private httpClient: HttpClient) { }
@@ -51,7 +51,7 @@ export class FlightInspirationSearchService {
     this.httpClient.get<FlightDestinations>(`${this.baseURL}/shopping/flight-destinations`, {params}).pipe(
       tap((flights: FlightDestinations) => {
         this.flights.next(flights.data);
-        this.currency.next(flights.dictionaries.currencies);
+        this.currencies.next(flights.dictionaries.currencies);
         this.locations.next(flights.dictionaries.locations);
       }),
     ).subscribe();
@@ -59,6 +59,14 @@ export class FlightInspirationSearchService {
 
   getFlightDestinations(): Observable<FlightDestination[]> {
     return this.flights.asObservable();
+  }
+
+  getCurrencies(): Observable<CurrencyDictionary> {
+    return this.currencies.asObservable();
+  }
+
+  getLocations(): Observable<LocationDictionary> {
+    return this.locations.asObservable();
   }
 
 }

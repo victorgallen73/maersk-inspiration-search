@@ -3,8 +3,8 @@
   <mat-card class=" main-card mat-elevation-z5">
     <mat-card-title class="big-text center-text">{{ 'SEARCHER.TITLE' | translate}}</mat-card-title>
     <mat-card-content class="content">
-      <mis-searcher class="searcher" (searchEmitter)="searchInspirationFlights($event)"></mis-searcher>
-      <mis-flight-inspiration-table class="table" *ngIf="(flights$ | async) as flights" [data]="flights"></mis-flight-inspiration-table>
+      <mis-searcher (searchEmitter)="searchInspirationFlights($event)"></mis-searcher>
+      <mis-flight-inspiration-table *ngIf="(flights$ | async) as flights" [dataSource]="flights"></mis-flight-inspiration-table>
     </mat-card-content>
     <mat-card-footer class="footer center-text">
       {{ 'FOOTER.DEVELOPED_BY' | translate}}

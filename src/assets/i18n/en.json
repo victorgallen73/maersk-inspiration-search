@@ -21,5 +21,22 @@
     "ORIGIN_TOOLTIP": "Type the name of the airport or city ...",
     "ONE_WAY": "One way flight",
     "VIEW_BY": "Group flights by"
+  },
+  "RESULTS": {
+    "DESTINATION_FILTER": "Type destination ...",
+    "DESTINATION": "Destination",
+    "DEPARTURE_DATE": "Departure Date",
+    "RETURN_DATE": "Return Date",
+    "PRICE": "Price ({{currency}})",
+    "DURATION": "Duration of journey",
+    "DURATION_TOOLTIP": "Exact duration or range of durations of the travel, in days",
+    "NON_STOP": "Direct flights only",
+    "RETURN": "Return",
+    "SEARCH_BUTTON": "Search flights",
+    "TITLE": "Let the desired journey begin",
+    "ORIGIN": "City",
+    "ORIGIN_TOOLTIP": "Type the name of the airport or city ...",
+    "ONE_WAY": "One way flight",
+    "VIEW_BY": "Group flights by"
   }
 }
