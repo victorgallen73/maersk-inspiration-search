@@ -63,6 +63,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatTooltipModule,
     // MatSliderModule,
     NgxMatRangeSliderModule,
+    OnlyDigitsDirective,
   ],
   providers:[]
 })
