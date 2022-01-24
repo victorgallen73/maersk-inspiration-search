@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable, tap } from 'rxjs';
 import { FlightDestination } from '../../models/flight-destination';
 import { Search } from '../../models/search';
 import { FlightInspirationSearchService } from '../../services/flight-inspiration-search.service';
@@ -11,6 +12,7 @@ import { FlightInspirationSearchService } from '../../services/flight-inspiratio
 })
 export class InspirationSearcherViewComponent implements OnInit {
   flights$!: Observable<FlightDestination[]>;
+  dataSource = new MatTableDataSource<FlightDestination>();
 
   constructor(
     private inspirationSearchService: FlightInspirationSearchService
@@ -20,7 +22,9 @@ export class InspirationSearcherViewComponent implements OnInit {
   }
 
   searchInspirationFlights(search: Search) {
-    this.flights$ = this.inspirationSearchService.getFlightDestinations();
+    this.flights$ = this.inspirationSearchService.getFlightDestinations().pipe(
+      tap((flights: FlightDestination[]) => this.dataSource = new MatTableDataSource(flights))
+    );
     this.inspirationSearchService.searchFlightDestinations(search);
   }
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,14 +13,13 @@ import { FlightInspirationSearchService } from '../../services/flight-inspiratio
   templateUrl: './flight-inspiration-table.component.html',
   styleUrls: ['./flight-inspiration-table.component.scss']
 })
-export class FlightInspirationTableComponent implements OnInit, AfterViewInit {
+export class FlightInspirationTableComponent implements OnInit, OnChanges, AfterViewInit {
 
-  @Input() dataSource!: FlightDestination[];
+  @Input() dataSource!: MatTableDataSource<FlightDestination>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   displayedColumns: string[] = ['destination', 'departureDate', 'returnDate', 'price'];
-  matTableDataSource!: MatTableDataSource<FlightDestination>;
 
   currencyTranslate = { currency: 'EUR' };
   currencies$!: Observable<CurrencyDictionary>;
@@ -28,9 +27,7 @@ export class FlightInspirationTableComponent implements OnInit, AfterViewInit {
 
   constructor(
     private inspirationFlightService: FlightInspirationSearchService
-    ) {
-      this.matTableDataSource = new MatTableDataSource(this.dataSource);
-    }
+    ) {}
 
   ngOnInit(): void {
     this.currencies$ = this.inspirationFlightService.getCurrencies().pipe(
@@ -40,7 +37,11 @@ export class FlightInspirationTableComponent implements OnInit, AfterViewInit {
     this.locations$ = this.inspirationFlightService.getLocations();
   }
 
-  ngAfterViewInit() {
-    this.matTableDataSource.paginator = this.paginator;
+  ngOnChanges(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 }

@@ -4,10 +4,7 @@
     <mat-card-title class="big-text center-text">{{ 'SEARCHER.TITLE' | translate}}</mat-card-title>
     <mat-card-content class="content">
       <mis-searcher (searchEmitter)="searchInspirationFlights($event)"></mis-searcher>
-      <mis-flight-inspiration-table *ngIf="(flights$ | async) as flights" [dataSource]="flights"></mis-flight-inspiration-table>
+      <mis-flight-inspiration-table *ngIf="(flights$ | async) as flights" [dataSource]="dataSource"></mis-flight-inspiration-table>
     </mat-card-content>
-    <mat-card-footer class="footer center-text">
-      {{ 'FOOTER.DEVELOPED_BY' | translate}}
-    </mat-card-footer>
   </mat-card>
 </div>
