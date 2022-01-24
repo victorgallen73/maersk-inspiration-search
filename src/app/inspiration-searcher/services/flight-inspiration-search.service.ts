@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { filter, map, Observable, ReplaySubject, tap } from 'rxjs';
+import { map, Observable, ReplaySubject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Airports } from '../models/airports';
 import { CurrencyDictionary } from '../models/currency-dictionary';
