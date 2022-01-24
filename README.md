@@ -42,4 +42,8 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 * In the SearcherComponent template, you can uncomment the the list of options that refer to the viewBy parameter of the endpoint. It has been left commented because if we send any value in this parameter, the endpoint returns error 500.
 
-* In FlightInspirationTableComponent, the idea was to use the locations$ observable to map the values coming from the destination field of each of the rows of the table, with the detailedName of the locations$ observable to give us better UX
+* In FlightInspirationTableComponent, the idea was to use the locations$ observable to map the values coming from the destination field of each of the rows of the table, with the detailedName of the locations$ observable to give us better UX.
+
+* In FlightInspirationTableComponent, I have not spent time paginating the result because in a real environment, the data is paginated from the backend and we would have to overwrite the Mat-Paginator for the format that comes from the request.
+
+* In FlightInspirationTableComponent, I would have liked to add sorting functionality to the Mat-Table.
