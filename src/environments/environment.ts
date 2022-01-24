@@ -2,8 +2,17 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { common } from "./common";
+
 export const environment = {
-  production: false
+  ... common,
+  production: false,
+  isDebugMode: true,
+  apiURL: 'https://test.api.amadeus.com/v1',
+  AMADEUS_CLIENT_ID: 'Cu21DJB12RIzr6wCDDUMM6KtpCNNkMyS',
+  AMADEUS_CLIENT_SECRET: '3XldjzHAmRp0pt3n',
+  tokenKey: 'amadeus-token',
+  refreshToken: 'refresh-token',
 };
 
 /*

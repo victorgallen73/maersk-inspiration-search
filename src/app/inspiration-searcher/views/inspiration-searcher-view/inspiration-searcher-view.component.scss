@@ -1,0 +1,41 @@
+.container {
+  flex: 0 1 60em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+}
+
+.main-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2em;
+  align-items: center;
+  background-color: #0b252e;
+  border-radius: 1em;
+  border: 0.1em solid beige;
+  // height: 65em;
+}
+
+.content {
+  display: flex;
+  gap: 2em;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-text {
+  text-align: center;
+  color: antiquewhite;
+}
+
+.big-text {
+  font-size: 1.5em;
+}
+
+.footer {
+  font-size: 12px;
+  font-style: italic;
+}
